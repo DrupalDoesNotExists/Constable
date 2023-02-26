@@ -40,7 +40,7 @@ public final class Constable extends JavaPlugin {
 
             // Scheduling
             getLogger().info("Scheduling merging tasks");
-            long threshold = (long) (Configuration.MERGING_THRESHOLD.duration().toMillis() / 0.05);
+            long threshold = (long) (Configuration.MERGING_THRESHOLD.duration().toMillis() / 50);
             new QueueHandlingTask().runTaskTimer(this, threshold, threshold);
         }
 
