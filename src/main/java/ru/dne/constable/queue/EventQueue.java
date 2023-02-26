@@ -4,6 +4,7 @@ import lombok.Getter;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public class EventQueue {
      */
     public @NotNull List<Event> tick(boolean shuffle) {
         if (shuffle) current.shuffle();
-        List<Event> eventList = current.getChildren();
+        List<Event> eventList = new ArrayList<>(current.getChildren());
         current.getChildren().clear();
         return eventList;
     }
