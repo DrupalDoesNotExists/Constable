@@ -38,7 +38,6 @@ public class ConstablePacketInterceptor extends PacketAdapter {
         // Not attacking - do nothing
         if (action != EnumWrappers.EntityUseAction.ATTACK) return;
 
-        event.setCancelled(true);
         Player player = event.getPlayer();
         int entityId = packet.getIntegers().read(0);
 
@@ -48,6 +47,8 @@ public class ConstablePacketInterceptor extends PacketAdapter {
                 .filter(entity -> entity.getEntityId() == entityId)
                 .findFirst().orElse(null);
         if (damaged == null) return;
+
+        event.setCancelled(true);
 
         // Put event into queue
         Event queueEvent = new Event((LivingEntity) damaged,
