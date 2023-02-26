@@ -15,10 +15,9 @@ import org.bukkit.entity.Player;
 
 import org.jetbrains.annotations.NotNull;
 
+import org.jetbrains.annotations.Nullable;
 import ru.dne.constable.Constable;
 import ru.dne.constable.queue.Event;
-
-import java.util.UUID;
 
 /**
  * Packet interceptor for ProtocolLib
@@ -28,7 +27,7 @@ public class ConstablePacketInterceptor extends PacketAdapter {
     public ConstablePacketInterceptor() {
         super(Constable.getConstable(),
                 ListenerPriority.NORMAL,
-                PacketType.Play.Client.ENTITY_ACTION);
+                PacketType.Play.Client.USE_ENTITY);
     }
 
     @Override
@@ -41,11 +40,14 @@ public class ConstablePacketInterceptor extends PacketAdapter {
 
         event.setCancelled(true);
         Player player = event.getPlayer();
-        UUID entityId = packet.getUUIDs().read(0);
+        int entityId = packet.getIntegers().read(0);
 
         // Get damaged entity and check if it's another player
-        Entity damaged = player.getWorld().getEntity(entityId);
-        if (damaged.getType() != EntityType.PLAYER) return;
+        @Nullable Entity damaged = player.getNearbyEntities(5, 5, 5)
+                .stream().filter(entity -> entity.getType() == EntityType.PLAYER)
+                .filter(entity -> entity.getEntityId() == entityId)
+                .findFirst().orElse(null);
+        if (damaged == null) return;
 
         // Put event into queue
         Event queueEvent = new Event((LivingEntity) damaged,
