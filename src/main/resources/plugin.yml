@@ -1,5 +1,7 @@
 name: Constable
 version: '${version}'
 main: ru.dne.constable.Constable
-authors: [ DNE ]
+authors: [ DNE, seakness ]
 description: Connection Stable is the PoC of the ping normalization algorithm for Paper
+depend:
+  - ProtocolLib
