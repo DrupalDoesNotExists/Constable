@@ -5,6 +5,8 @@ Connection Stable is the PoC of the ping normalization algorithm for Paper.
 ## Installation
 
 Drop build jar into `plugins/` folder, then restart your server.
+| :exclamation: This will probably break 101% of PvP mechanics! |
+|---------------------------------------------------------------|
 
 ## How does this work
 
